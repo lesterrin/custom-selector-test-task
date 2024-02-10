@@ -45,7 +45,7 @@ const CustomSelector = () => {
     }
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter' && inputValue) {
+        if (e.key === 'Enter' && inputValue && !itemsList.includes(inputValue)) {
             let newItemsListList = [...itemsList, inputValue];
             setItemsList(newItemsListList);
             setCheckedItemKey(null);
