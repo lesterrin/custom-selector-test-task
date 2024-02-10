@@ -9,7 +9,7 @@ const SelectSection: FC<SelectSectionType> = ({itemsList, checkedItemKey, checkI
         if (checkedItemKey === i) isChecked = true;
 
         return <CustomSelectorItem
-            key={element} //переименовать на элементкей или что-то в этом духе
+            key={element}
             element={element}
             isChecked={isChecked}
             checkItem={() => checkItem(i)}
