@@ -2,8 +2,8 @@ import React from "react";
 
 export type InputSectionType = {
     inputValue: string,
-    checkedItemKey: number | null,
-    itemsList: Array<string>,
+    checkedItem: string,
+    itemsList: Set<string>,
     deleteItem: () => void,
     showList: () => void,
     onInputChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void,
@@ -11,9 +11,9 @@ export type InputSectionType = {
 }
 
 export type SelectSectionType = {
-    itemsList: Array<string>
-    checkedItemKey: number | null,
-    checkItem: (element: number) => void
+    itemsList: Set<string>
+    checkedItem: string,
+    checkItem: (element: string) => void
 }
 
 export type CustomSelectorItemType = {

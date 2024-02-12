@@ -18,26 +18,24 @@ const CustomSelector = () => {
     }, []);
 
 
-    const [itemsList, setItemsList] = useState<Array<string>>([]);
+    const [itemsList, setItemsList] = useState<Set<string>>(new Set());
     const [inputValue, setInputValue] = useState('');
-    const [checkedItemKey, setCheckedItemKey] = useState<number | null>(null);
+    const [checkedItem, setCheckedItem] = useState<string>('');
     const [isListShowed, setIsListShowed] = useState(false);
 
-    const deleteItem = (key: number | null) => {
-        if (key !== null && checkedItemKey !== null) {
-            let newItemsListList = [...itemsList];
-            newItemsListList.splice(checkedItemKey, 1)
-            setItemsList(newItemsListList);
-            if (checkedItemKey === key) setInputValue('');
-            setCheckedItemKey(null);
-        }
+    const deleteItem = (item: string) => {
+        let newItemsListList = new Set(itemsList);
+        newItemsListList.delete(item)
+        setItemsList(newItemsListList);
+
+        if (checkedItem === item) setInputValue('');
+
+        setCheckedItem('');
     }
 
-    const checkItem = (key: number | null) => {
-        if (key !== null) {
-            setCheckedItemKey(key);
-            setInputValue(itemsList[key]);
-        }
+    const checkItem = (item: string) => {
+        setCheckedItem(item);
+        setInputValue(item);
     }
 
     const onInputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,10 +43,11 @@ const CustomSelector = () => {
     }
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter' && inputValue && !itemsList.includes(inputValue)) {
-            let newItemsListList = [...itemsList, inputValue];
+        if (e.key === 'Enter' && inputValue) {
+            let newItemsListList = new Set(itemsList);
+            newItemsListList.add(inputValue);
             setItemsList(newItemsListList);
-            setCheckedItemKey(null);
+            setCheckedItem('');
             setInputValue('');
         }
     }
@@ -58,15 +57,15 @@ const CustomSelector = () => {
             <InputSection
                 inputValue={inputValue}
                 itemsList={itemsList}
-                checkedItemKey={checkedItemKey}
-                deleteItem={() => deleteItem(checkedItemKey)}
+                checkedItem={checkedItem}
+                deleteItem={() => deleteItem(checkedItem)}
                 onInputChangeHandler={onInputChangeHandler}
                 handleKeyDown={handleKeyDown}
                 showList={() => setIsListShowed(true)}
             />
-            {isListShowed && itemsList.length > 0 &&
+            {isListShowed && itemsList.size > 0 &&
             <SelectSection itemsList={itemsList}
-                           checkedItemKey={checkedItemKey}
+                           checkedItem={checkedItem}
                            checkItem={checkItem}/>}
 
         </div>)

@@ -2,17 +2,16 @@ import React, {FC} from "react";
 import CustomSelectorItem from "../customSelectorItem/customSelectorItem";
 import {SelectSectionType} from "../types";
 
-const SelectSection: FC<SelectSectionType> = ({itemsList, checkedItemKey, checkItem}) => {
-    const customSelectorItemList = itemsList.map((element, i) => {
+const SelectSection: FC<SelectSectionType> = ({itemsList, checkedItem, checkItem}) => {
+    const customSelectorItemList = Array.from(itemsList).map(element => {
         let isChecked = false;
 
-        if (checkedItemKey === i) isChecked = true;
+        if (checkedItem === element) isChecked = true;
 
         return <CustomSelectorItem
-            key={element}
             element={element}
             isChecked={isChecked}
-            checkItem={() => checkItem(i)}
+            checkItem={() => checkItem(element)}
         />
     });
 

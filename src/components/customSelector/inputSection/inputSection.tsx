@@ -4,12 +4,11 @@ import Trash from "../../svgComponents/trash";
 import {InputSectionType} from "../types";
 
 const InputSection: FC<InputSectionType> = ({
-                                                inputValue, itemsList, checkedItemKey,
+                                                inputValue, itemsList, checkedItem,
                                                 showList, onInputChangeHandler, handleKeyDown, deleteItem
                                             }) => {
 
     const id = useId();
-    const checkedItem = checkedItemKey !== null ? itemsList[checkedItemKey] : null;
 
     return (
         <div>
@@ -25,7 +24,7 @@ const InputSection: FC<InputSectionType> = ({
                        className="border border-gray-300 rounded-md w-full p-2"
                 />
                 <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex">
-                    {checkedItem && itemsList.length > 1 &&
+                    {checkedItem && itemsList.size > 1 &&
                     <button onClick={deleteItem}>
                         <Trash/>
                     </button>
